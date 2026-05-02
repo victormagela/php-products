@@ -4,6 +4,11 @@
     padding: 0;
 }
 
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
 body {
     min-height: 100vh;
     font-family: Arial, Helvetica, sans-serif;
@@ -67,13 +72,16 @@ form label {
     }
 }
 
-input[type="submit"] {
+input[type="submit"],
+.back-btn {
     font-size: 1.6rem;
     font-weight: 600;
     background-color: #E5E5E5;
     padding: 8px 12px;
     border: none;
     border-radius: 12px;
+    cursor: pointer;
+    color: #333;
     transition: background-color 0.3s ease;
 
     &:hover {
@@ -83,5 +91,21 @@ input[type="submit"] {
     &:active {
         background-color: hsl(0, 0%, 60%);
     }
+}
+
+p {
+    font-size: 1.2rem;
+}
+
+.healthy {
+    color: green;
+}
+
+.warning {
+    color: orange;
+}
+
+.danger {
+    color: red;
 }
 

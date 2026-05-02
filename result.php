@@ -17,25 +17,25 @@
                 $qty = $_POST['qty'];
 
                 $product = new Product($name, $unitPrice, $qty);
+            ?>
+                <div class="container">
+                    <p>Produto: <?= htmlspecialchars($product->getName()) ?>, registrado com sucesso! Preço: R$<?= $product->getUnitPrice() ?></p>
 
-                echo "Produto: {$product->getName()}, registrado com sucesso! <br>";
+                    <?php if ($product->getQuantity() < 5 ) { ?>
+                            <p class="danger">Alerta vermelho! Produto com estoque crítico! Estoque: <?= $product->getQuantity() ?></p>
+                        <?php } else if ($product->getQuantity() < 10) { ?>
+                            <p class="warning">Alerta! Produto com estoque baixo! Estoque: <?= $product->getQuantity() ?></p>
+                        <?php } else { ?>
+                            <p class="healthy">Estoque saudável! Estoque: <?= $product->getQuantity() ?></p>
+                        <?php } ?>
 
-                if ($product->getQuantity() < 5 ) {
-                    echo "Alerta vermelho! Produto com estoque crítico! Estoque: {$product->getQuantity()}";
-                }
-                else if ($product->getQuantity() < 10) {
-                    echo "Alerta! Produto com estoque baixo! Estoque: {$product->getQuantity()}";
-                }
-                else {
-                    echo "Estoque saudável!";
-                }
-
+                    <a class="back-btn" href="index.php">Voltar</a>
+                    
+                </div>
+            <?php
             }
         }
     ?>
-
-    <br>
-    <a href="index.php">Voltar</a>
     
 </body>
 </html>
