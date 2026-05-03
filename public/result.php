@@ -1,3 +1,15 @@
+<?php
+    function getQuantityClass(int $quantity): string {
+        if ($quantity >= 10) {
+            return "healthy";
+        } else if ($quantity >= 5) {
+            return "warning";
+            
+        } else return "danger";
+
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -19,22 +31,54 @@
 
                 $product = new Product($_POST['name'], $_POST['unit-price'], $_POST['qty']);
                 $repo->save($product);
+                $rows = array_map(function ($product) {
+                    $formattedPrice = number_format($product->getunitPrice(), 2);
+                    $quantity = $product->getQuantity();
+                    $quantityClass = getQuantityClass($quantity);
+
+                    return "
+                        <tr>
+                            <td>{$product->getName()}</td>
+                            <td>{$formattedPrice}</td>
+                            <td><span class=$quantityClass>$quantity</span></td>
+                        </tr>
+                    ";
+
+                }, $repo->getAll());
 
             ?>
                 <div class="container">
-                    <p>Produto: <?= htmlspecialchars($product->getName()) ?>, registrado com sucesso! Preço: R$<?= $product->getUnitPrice() ?></p>
+                    <table>
+                        <caption>
+                            <p class="healthy">Verde - Estoque Saudável</p>
+                            <p class="warning">Laranja - Estoque baixo</p>
+                            <p class="danger">Vermelho - Estoque crítico</p>
 
-                    <?php if ($product->getQuantity() < 5 ) { ?>
-                            <p class="danger">Alerta vermelho! Produto com estoque crítico! Estoque: <?= $product->getQuantity() ?></p>
-                        <?php } else if ($product->getQuantity() < 10) { ?>
-                            <p class="warning">Alerta! Produto com estoque baixo! Estoque: <?= $product->getQuantity() ?></p>
-                        <?php } else { ?>
-                            <p class="healthy">Estoque saudável! Estoque: <?= $product->getQuantity() ?></p>
-                        <?php } ?>
+                        </caption>
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Preço Unitário</th>
+                                <th>Quantidade</th>
+                            
+                            </tr>
+                        
+                        </thead>
+                        <tbody>
+                            <?php 
+                                foreach ($rows as $row) {
+                                    echo $row;
+                                    
+                                }
+                            
+                            ?>
 
-                    <a class="back-btn" href="index.php">Voltar</a>
+                        </tbody>
+                        
+                    </table>
                     
                 </div>
+                <a href="./index.php" class="back-btn">Voltar</a>
             <?php
 
             }
