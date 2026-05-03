@@ -12,9 +12,9 @@ class Dbh {
                 self::$db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
             }
-            catch (PDOException) {
-                throw new Exception("Erro ao se conectar com o banco de dados.");
-
+            catch (PDOException $e) {
+                // throw new Exception("Erro ao se conectar com o banco de dados.");
+                throw $e;
             }
 
         }

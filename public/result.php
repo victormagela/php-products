@@ -3,20 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./style.css">
     <title>Produtos</title>
 </head>
 <body>
     <?php
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
-            require_once './Classes/Product.php';
-        
+            
             if (isset($_POST['register'])) {
-                $name = $_POST['name'];
-                $unitPrice = $_POST['unit-price'];
-                $qty = $_POST['qty'];
+                require_once '../src/Classes/Product.php';
+                require_once '../src/Classes/Dbh.php';
+                require_once '../src/Classes/ProductRepository.php';
 
-                $product = new Product($name, $unitPrice, $qty);
+                $repo = new ProductRepository(Dbh::getConnection());
+
+                $product = new Product($_POST['name'], $_POST['unit-price'], $_POST['qty']);
+                $repo->save($product);
+
             ?>
                 <div class="container">
                     <p>Produto: <?= htmlspecialchars($product->getName()) ?>, registrado com sucesso! Preço: R$<?= $product->getUnitPrice() ?></p>
@@ -33,8 +36,11 @@
                     
                 </div>
             <?php
+
             }
+
         }
+
     ?>
     
 </body>
