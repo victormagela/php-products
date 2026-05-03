@@ -31,20 +31,6 @@
 
                 $product = new Product($_POST['name'], $_POST['unit-price'], $_POST['qty']);
                 $repo->save($product);
-                $rows = array_map(function ($product) {
-                    $formattedPrice = number_format($product->getunitPrice(), 2);
-                    $quantity = $product->getQuantity();
-                    $quantityClass = getQuantityClass($quantity);
-
-                    return "
-                        <tr>
-                            <td>{$product->getName()}</td>
-                            <td>{$formattedPrice}</td>
-                            <td><span class=$quantityClass>$quantity</span></td>
-                        </tr>
-                    ";
-
-                }, $repo->getAll());
 
             ?>
                 <div class="container">
@@ -66,6 +52,21 @@
                         </thead>
                         <tbody>
                             <?php 
+                                $rows = array_map(function ($product) {
+                                    $formattedPrice = number_format($product->getunitPrice(), 2);
+                                    $quantity = $product->getQuantity();
+                                    $quantityClass = getQuantityClass($quantity);
+
+                                    return "
+                                        <tr>
+                                            <td>{$product->getName()}</td>
+                                            <td>{$formattedPrice}</td>
+                                            <td><span class=$quantityClass>$quantity</span></td>
+                                        </tr>
+                                    ";
+
+                                }, $repo->getAll());
+
                                 foreach ($rows as $row) {
                                     echo $row;
                                     
