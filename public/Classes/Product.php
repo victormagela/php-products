@@ -3,13 +3,13 @@
 class Product {
     private string $name;
     private float $unit_price;
-    private int $quantity;
+    private int $qty;
 
-    public function __construct(string $name, float $unit_price, int $quantity)
+    public function __construct(string $name, float $unit_price, int $qty)
     {
         $this->name = $name;
         $this->unit_price = $unit_price;
-        $this->quantity = $quantity;
+        $this->qty = $qty;
 
     }
 
@@ -24,7 +24,7 @@ class Product {
     }
 
     public function getQuantity() : int {
-        return $this->quantity;
+        return $this->qty;
 
     }
 
