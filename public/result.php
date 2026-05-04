@@ -1,15 +1,3 @@
-<?php
-    function getQuantityClass(int $quantity): string {
-        if ($quantity >= 10) {
-            return "healthy";
-        } else if ($quantity >= 5) {
-            return "warning";
-            
-        } else return "danger";
-
-    }
-?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -55,7 +43,12 @@
                                 $rows = array_map(function ($product) {
                                     $formattedPrice = number_format($product->getunitPrice(), 2);
                                     $quantity = $product->getQuantity();
-                                    $quantityClass = getQuantityClass($quantity);
+                                    $quantityClass = (function () use ($quantity) {
+                                        if ($quantity >= 10) return "healthy";
+                                        else if ($quantity >= 5) return "warning";
+                                        else return "danger";
+
+                                    })();
 
                                     return "
                                         <tr>
