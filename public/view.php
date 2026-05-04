@@ -26,6 +26,7 @@
             </caption>
             <thead>
                 <tr>
+                    <th>Id</th>
                     <th>Nome</th>
                     <th>Preço Unitário</th>
                     <th>Quantidade</th>
@@ -47,6 +48,7 @@
 
                     ?>
                     <tr>
+                        <td><?= $product->getId() ?></td>
                         <td><?=  htmlspecialchars($product->getName()) ?></td>
                         <td><?= $formattedPrice ?></td>
                         <td><span class="<?= $quantityClass ?>"><?= $quantity ?></span></td>

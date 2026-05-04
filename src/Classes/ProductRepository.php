@@ -35,7 +35,7 @@ class ProductRepository {
 
     }
 
-    /*
+    /**
     * @return Product[]
     */
     public function getAll(): array {
@@ -43,7 +43,7 @@ class ProductRepository {
         $stmt->execute();
         $result = $stmt->fetchAll();
 
-        return array_map(fn($row) => new Product($row['name'], $row['unit_price'], $row['qty']), $result);
+        return array_map(fn($row) => Product::recreate($row['product_id'], $row['name'], $row['unit_price'], $row['qty']), $result);
 
     }
 

@@ -45,7 +45,7 @@
 
                 $repo = new ProductRepository(Dbh::getConnection());
 
-                $product = new Product($_POST['name'], $_POST['unit-price'], $_POST['qty']);
+                $product = Product::create($_POST['name'], $_POST['unit-price'], $_POST['qty']);
                 $repo->save($product);
 
             }
