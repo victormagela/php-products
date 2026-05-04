@@ -10,7 +10,7 @@
     <div class="container">
         <h1>Cadastre seu produto</h1>
     
-        <form action="./result.php" method="post">
+        <form action="./index.php" method="post">
             <div class="form-field">
                 <label for="name">Nome:</label>
                 <input type="text" name="name" id="name" required>
@@ -34,3 +34,22 @@
     
 </body>
 </html>
+
+<?php 
+    if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            
+            if (isset($_POST['register'])) {
+                require_once '../src/Classes/Product.php';
+                require_once '../src/Classes/Dbh.php';
+                require_once '../src/Classes/ProductRepository.php';
+
+                $repo = new ProductRepository(Dbh::getConnection());
+
+                $product = new Product($_POST['name'], $_POST['unit-price'], $_POST['qty']);
+                $repo->save($product);
+
+            }
+
+    }
+
+?>
