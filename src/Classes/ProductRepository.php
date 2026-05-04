@@ -2,12 +2,25 @@
 
 class ProductRepository {
     private PDO $db;
-    private bool $tableReady = false;
+    private bool $tableReady;
 
     public function __construct(PDO $db)
     {
         $this->db = $db;
+        $this->tableReady = $this->tableExist();
 
+    }
+
+    private function tableExist() : bool {
+        try {
+            $result = $this->db->query("
+                SELECT 1 FROM products LIMIT 1;
+            ");
+        } catch (Exception $e) {
+            return false;
+        }
+
+        return $result !== false;
     }
 
     private function createProductsTable() {
@@ -39,6 +52,8 @@ class ProductRepository {
     * @return Product[]
     */
     public function getAll(): array {
+        if (!$this->tableReady) return [];
+
         $stmt = $this->db->prepare("SELECT * FROM products");
         $stmt->execute();
         $result = $stmt->fetchAll();

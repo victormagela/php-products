@@ -17,48 +17,53 @@
 </head>
 <body>
     <div class="container">
-        <table>
-            <caption>
-                <p class="healthy">Verde - Estoque Saudável</p>
-                <p class="warning">Laranja - Estoque baixo</p>
-                <p class="danger">Vermelho - Estoque crítico</p>
+        <?php if($products): ?>
+            <table>
+                <caption>
+                    <p class="healthy">Verde - Estoque Saudável</p>
+                    <p class="warning">Laranja - Estoque baixo</p>
+                    <p class="danger">Vermelho - Estoque crítico</p>
 
-            </caption>
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Nome</th>
-                    <th>Preço Unitário</th>
-                    <th>Quantidade</th>
-                
-                </tr>
-            
-            </thead>
-            <tbody>
-                <?php foreach($products as $product): ?>
-                    <?php 
-                        $formattedPrice = number_format(htmlspecialchars($product->getunitPrice()), 2);
-                        $quantity = htmlspecialchars($product->getQuantity());
-                        $quantityClass = (function () use ($quantity) {
-                            if ($quantity >= 10) return "healthy";
-                            else if ($quantity >= 5) return "warning";
-                            else return "danger";
-
-                        })();
-
-                    ?>
+                </caption>
+                <thead>
                     <tr>
-                        <td><?= $product->getId() ?></td>
-                        <td><?=  htmlspecialchars($product->getName()) ?></td>
-                        <td><?= $formattedPrice ?></td>
-                        <td><span class="<?= $quantityClass ?>"><?= $quantity ?></span></td>
+                        <th>Id</th>
+                        <th>Nome</th>
+                        <th>Preço Unitário</th>
+                        <th>Quantidade</th>
+                    
                     </tr>
+                
+                </thead>
+                <tbody>
+                    <?php foreach($products as $product): ?>
+                        <?php 
+                            $formattedPrice = number_format(htmlspecialchars($product->getunitPrice()), 2);
+                            $quantity = htmlspecialchars($product->getQuantity());
+                            $quantityClass = (function () use ($quantity) {
+                                if ($quantity >= 10) return "healthy";
+                                else if ($quantity >= 5) return "warning";
+                                else return "danger";
 
-                <?php endforeach; ?>
+                            })();
 
-            </tbody>
-            
-        </table>
+                        ?>
+                        <tr>
+                            <td><?= $product->getId() ?></td>
+                            <td><?=  htmlspecialchars($product->getName()) ?></td>
+                            <td><?= $formattedPrice ?></td>
+                            <td><span class="<?= $quantityClass ?>"><?= $quantity ?></span></td>
+                        </tr>
+
+                    <?php endforeach; ?>
+
+                </tbody>
+                
+            </table>
+
+        <?php else:
+            echo "Nenhum produto salvo.";
+        endif; ?>
         
     </div>
     <a href="./index.php" class="back-btn">Voltar</a>

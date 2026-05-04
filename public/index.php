@@ -36,14 +36,15 @@
 </html>
 
 <?php 
+    require_once '../src/Classes/Product.php';
+    require_once '../src/Classes/Dbh.php';
+    require_once '../src/Classes/ProductRepository.php';
+
+    $repo = new ProductRepository(Dbh::getConnection());
+
     if ($_SERVER['REQUEST_METHOD'] === "POST") {
             
             if (isset($_POST['register'])) {
-                require_once '../src/Classes/Product.php';
-                require_once '../src/Classes/Dbh.php';
-                require_once '../src/Classes/ProductRepository.php';
-
-                $repo = new ProductRepository(Dbh::getConnection());
 
                 $product = Product::create($_POST['name'], $_POST['unit-price'], $_POST['qty']);
                 $repo->save($product);
