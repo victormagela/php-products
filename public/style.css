@@ -75,10 +75,15 @@ form label {
     }
 }
 
+.btns {
+    margin-inline: auto;
+}
+
 input[type="submit"],
-.back-btn {
+.link-btn {
     font-size: 1.6rem;
     font-weight: 600;
+    font-family: MS Shell Dlg \32;
     background-color: #E5E5E5;
     padding: 8px 12px;
     border: none;

@@ -26,7 +26,11 @@
                 <input type="number" name="qty" id="qty" required>
             </div>
     
-            <input type="submit" value="Cadastrar" name="register">
+            <div class="btns">
+                <a href="./view.php" class="link-btn">Ver Tabela</a>
+                <input type="submit" value="Cadastrar" name="register">
+
+            </div>
         
         </form>
 

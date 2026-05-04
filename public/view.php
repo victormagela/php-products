@@ -66,7 +66,7 @@
         endif; ?>
         
     </div>
-    <a href="./index.php" class="back-btn">Voltar</a>
+    <a href="./index.php" class="link-btn">Voltar</a>
     
 </body>
 </html>
