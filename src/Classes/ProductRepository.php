@@ -35,6 +35,9 @@ class ProductRepository {
 
     }
 
+    /*
+    * @return Product[]
+    */
     public function getAll(): array {
         $stmt = $this->db->prepare("SELECT * FROM products");
         $stmt->execute();

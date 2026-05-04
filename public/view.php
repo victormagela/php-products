@@ -4,6 +4,7 @@
     require_once '../src/Classes/ProductRepository.php';
 
     $repo = new ProductRepository(Dbh::getConnection());
+    $products = $repo->getAll();
 
 ?>
 <!DOCTYPE html>
@@ -33,10 +34,10 @@
             
             </thead>
             <tbody>
-                <?php 
-                    $rows = array_map(function ($product) {
-                        $formattedPrice = number_format($product->getunitPrice(), 2);
-                        $quantity = $product->getQuantity();
+                <?php foreach($products as $product): ?>
+                    <?php 
+                        $formattedPrice = number_format(htmlspecialchars($product->getunitPrice()), 2);
+                        $quantity = htmlspecialchars($product->getQuantity());
                         $quantityClass = (function () use ($quantity) {
                             if ($quantity >= 10) return "healthy";
                             else if ($quantity >= 5) return "warning";
@@ -44,22 +45,14 @@
 
                         })();
 
-                        return "
-                            <tr>
-                                <td>{$product->getName()}</td>
-                                <td>{$formattedPrice}</td>
-                                <td><span class=$quantityClass>$quantity</span></td>
-                            </tr>
-                        ";
+                    ?>
+                    <tr>
+                        <td><?=  htmlspecialchars($product->getName()) ?></td>
+                        <td><?= $formattedPrice ?></td>
+                        <td><span class="<?= $quantityClass ?>"><?= $quantity ?></span></td>
+                    </tr>
 
-                    }, $repo->getAll());
-
-                    foreach ($rows as $row) {
-                        echo $row;
-                        
-                    }
-                
-                ?>
+                <?php endforeach; ?>
 
             </tbody>
             
